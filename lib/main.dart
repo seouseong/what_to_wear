@@ -44,6 +44,25 @@ class _SettingsPageState extends State<SettingsPage> {
     prefs.setString(key, value);
   }
 
+  Widget _buildCard(String title, Widget dropdown) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 4,
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            dropdown,
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,60 +72,67 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text("성별"),
-            DropdownButton<String>(
-              value: gender,
-              hint: Text("성별 선택"),
-              items: ["남", "여", "기타"].map((value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  gender = value;
-                  saveSetting('gender', value!);
-                });
-              },
+            _buildCard(
+              "성별",
+              DropdownButton<String>(
+                value: gender,
+                hint: Text("성별 선택"),
+                isExpanded: true,
+                items: ["남", "여", "기타"].map((value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    gender = value;
+                    saveSetting('gender', value!);
+                  });
+                },
+              ),
             ),
-            SizedBox(height: 20),
-            Text("추위/더위 민감도"),
-            DropdownButton<String>(
-              value: sensitivity,
-              hint: Text("민감도 선택"),
-              items: ["예민함", "보통", "둔함"].map((value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  sensitivity = value;
-                  saveSetting('sensitivity', value!);
-                });
-              },
+            _buildCard(
+              "추위/더위 민감도",
+              DropdownButton<String>(
+                value: sensitivity,
+                hint: Text("민감도 선택"),
+                isExpanded: true,
+                items: ["예민함", "보통", "둔함"].map((value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    sensitivity = value;
+                    saveSetting('sensitivity', value!);
+                  });
+                },
+              ),
             ),
-            SizedBox(height: 20),
-            Text("활동 유형"),
-            DropdownButton<String>(
-              value: activity,
-              hint: Text("활동 선택"),
-              items: ["실내", "실외"].map((value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  activity = value;
-                  saveSetting('activity', value!);
-                });
-              },
+            _buildCard(
+              "활동 유형",
+              DropdownButton<String>(
+                value: activity,
+                hint: Text("활동 선택"),
+                isExpanded: true,
+                items: ["실내", "실외"].map((value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    activity = value;
+                    saveSetting('activity', value!);
+                  });
+                },
+              ),
             ),
           ],
         ),
